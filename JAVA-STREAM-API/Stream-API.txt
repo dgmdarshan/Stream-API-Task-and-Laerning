@@ -1,0 +1,267 @@
+				STREAM API
+
+What is the use of consumer?
+->A consumer is a functional interface , which is used to consume some value .It will not return any value. Because it is just there too consume.
+
+
+JAVA Stream Foundation
+
+Key Point:
+The elements in stream are getting processed One By One
+
+Collection: 
+->It means single unit of object
+
+Stream:
+->If we want to process the object from a collection , then we should use a stream.
+
+Collection Stream:
+  Stream s= Collection.stream();
+
+Package : java.util.stream
+
+In stream API , operations are classified into two operations
+1.Intermediate Operations:
+->Transforms a stream into another stream
+Ex: filter , map , distinct , sorted , limit etc:
+
+2.Terminal Operations:
+->It produce a result and terminate the stream
+EX: forEach , collect , reduce , count etc;
+
+
+Intermediate Examples:
+1.Filter :
+Syntax:
+  Stream filterStream=originalStream.filter(element ->/* predicate*/);
+
+->It is used to filter the data from stream
+->And create a new stream
+->Filter takes predicate as an argument , which returns Boolean type (true /false)
+->It is intermediate operation.
+
+Q.Find the even number from ArrayList using stream?
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class FilterJava {
+    public static void main(String[] args) {
+        List<Integer> list= Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+       List<Integer>filteredList= list.stream().filter(ele->ele%2==0).toList();
+        System.out.println("The even element stream : "+filteredList);
+    }
+}
+
+2.MAP:
+syntax : 
+		Stream mappedStream=originalStream.map(element->/*transformation function*/);
+->Map is used to transform each element of stream
+->And returns a new Stream
+->Map takes function as an argument , the return type based on the types of data.
+->It is intermediate operation.
+
+Q. Multiply by two for each element from the list
+
+import java.util.Arrays;
+import java.util.List;
+
+public class MapJAVA {
+    public static void main(String[] args) {
+        List<Integer> list= Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+                    List<Integer> transferdMapStream   = list.stream().map(ele->ele*2).toList();
+        System.out.println("The Multiply of element by 2 using map :" +transferdMapStream);
+    }
+}
+
+Q. Select only passed student
+
+Q. Add the 5 grace marks to all the failed student
+
+import java.util.Arrays;
+import java.util.List;
+
+public class MapJAVA {
+    public static void main(String[] args) {
+//        List<Integer> list= Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+//                    List<Integer> transferdMapStream   = list.stream().map(ele->ele*2).toList();
+//        System.out.println("The Multiply of element by 2 using map :" +transferdMapStream);
+
+        List<Integer> marks =Arrays.asList(10 , 25, 35, 30  , 45, 55, 67, 98,  89, 78, 60);
+       List<Integer> passedStudents= marks.stream().filter(ele->ele>35).toList();
+        System.out.println("These are passed students :"+passedStudents);
+
+       List<Integer> graceForFailedStudents= marks.stream().filter(i->i<35).map(j->j+5).toList();
+        System.out.println("The Grace marks of 5 added to a all the faileed studnets now marks of there are : " +graceForFailedStudents);
+    }
+}
+
+---------------------------------------
+->filter:
+ Input :10 elements
+ Output : 10 elements
+
+->map:
+ Input : 10 elements
+ Output : 10 elements
+
+->count() : To count the number of element in the stream
+	   -Sorted according to natural order
+
+
+Q. Sort the element from stream.
+List<Integer> sortedMarks= marks.stream().sorted().toList();
+System.out.println("The total count of failed student : "+sortedMarks);
+
+If we want to sort in descending order , then how to perform?
+
+->If we want customized sorting order then we should go for comparator
+
+Comparator is a functional Interface it has compare(obj1 , obj2) method.
+
+COMPARATOR:
+Method : compare(obj1 , obj2):
+	return -ve : if obj1 has come before obj2
+	return +ve : if obj1 has come after obj2
+	return 0 : if obj1 and obj2 are equal
+
+
+for descending order: 
+	(a,b)->(a<b) ? 1 : (a>b)?-1:0
+
+sorted() : According to default natural sorting order
+sorted( Comparator ) : For customized sorting order
+
+Q.Sort the element in descending order using comparator from stream?
+->we can use compareTo() , reverseorder()
+  List<Integer> customizedSortedMarks= marks.stream().sorted((a,b)-> b.compareTo(a)) or .reverseOredr().toList();
+        System.out.println("The total count of failed student in Customized sorting : "+customizedSortedMarks);
+
+Q.Sort the element based on the length of the ArrayList>
+
+     List<String> custoSort=Arrays.asList("A","BBBB","AAAAAAA","ABCD","FDGS");
+        Comparator<String> c= (a,b)->{
+            int l1=a.length();
+            int l2=b.length();
+            return Integer.compare(l1,l2);
+        };
+       List<String> sortedString= custoSort.stream().sorted(c).toList();
+        System.out.println("The Sorted String :"+sortedString);
+
+
+--------------------------------------------------------------------
+
+min() and max():
+ ->Both method takes the comparator as an argument.
+ ->And based on the comparator result it will return the value.
+
+min(comparator)->will return 1st element from the comparator result
+min(comparator)->will return last element from the comparator result
+
+
+
+--------------------------------------------------------------------------
+
+forEach(): 
+->To perform an action for element of this stream.
+->It is terminal operation
+
+
+Q. How to convert Stream of object into Arrays?
+->toArray():
+
+Syntax: 
+	Integr[] i=list.stream.toArray(Integer[]::new);
+->It returns an array containing elements of this stream
+->It is a terminal operations
+
+Arrays.stream(array)  or  Stream.of(arr)
+
+
+->Stream.of(args):
+Argument should be any types either arrays or any group of elements
+
+
+
+Topics are covered 
+->stream()
+->filter()
+->map()
+->collect()
+->count()
+->sorted()
+->sorted(Comparator)
+->max()and min()
+->forEach()
+->toArray()
+->Stream.of()
+
+
+
+
+Task to perform the Stream API
+Q1. Find the employee who has maximum salary?
+Q2. Find the employee whose has second highest salary?.skip(1)->after sorted
+Q3. Find the employee who is most senior based on joining date?
+Q4. Count the employee based on the gender?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
